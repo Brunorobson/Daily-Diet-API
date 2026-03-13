@@ -1,0 +1,48 @@
+{
+  "name": "2-api-rest-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "knex": "node --no-warnings --import tsx ./node_modules/knex/bin/cli.js",
+    "lint": "eslint src -ext .ts",
+    "test": "vitest",
+    "build": "tsup src --out-dir build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Brunorobson/2-api-rest-node.js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Brunorobson/2-api-rest-node.js/issues"
+  },
+  "homepage": "https://github.com/Brunorobson/2-api-rest-node.js#readme",
+  "devDependencies": {
+    "@rocketseat/eslint-config": "^2.2.2",
+    "@types/node": "^25.3.3",
+    "@types/supertest": "^7.2.0",
+    "eslint": "^8.57.1",
+    "supertest": "^7.2.2",
+    "tsup": "^8.5.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@fastify/cookie": "^11.0.2",
+    "dotenv": "^17.3.1",
+    "fastify": "^5.7.4",
+    "knex": "^3.1.0",
+    "pg": "^8.20.0",
+    "sqlite3": "^5.1.7",
+    "vitest": "^4.0.18",
+    "zod": "^4.3.6"
+  }
+}
