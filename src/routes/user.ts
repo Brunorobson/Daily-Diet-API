@@ -26,6 +26,7 @@ export async function userRoutes(app: FastifyInstance) {
       .first()
     return { user }
   })
+
   app.post(
     '/create',
     { preHandler: [checkSessionIdExists] },
@@ -60,4 +61,12 @@ export async function userRoutes(app: FastifyInstance) {
         .send({ message: 'Usuário criado', user: Userbody })
     },
   )
+
+  app.get('/snacks', async (request) => {
+    const sessionId = request.cookies.sessionId
+
+    const snacks = await knex('snacks').where('userId', sessionId).select()
+
+    return { snacks }
+  })
 }

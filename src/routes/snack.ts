@@ -88,4 +88,82 @@ export async function snackRoutes(app: FastifyInstance) {
     await knex('snacks').where({ id: paramSnack.id }).delete()
     return reply.status(204).send()
   })
+
+  app.get('/user/:id', async (request) => {
+    const getSnackBodySchema = z.object({
+      id: z.string().uuid(),
+    })
+
+    const paramSnack = getSnackBodySchema.parse(request.params)
+
+    const snacks = await knex('snacks').where('userId', paramSnack.id).select()
+
+    return { snacks }
+  })
+
+  app.get('/:id', async (request, reply) => {
+    const getSnackParamsSchema = z.object({
+      id: z.string().uuid(),
+    })
+
+    const paramSnack = getSnackParamsSchema.parse(request.params)
+
+    const snack = await knex('snacks').where({ id: paramSnack.id }).first()
+
+    if (!snack) {
+      return reply.status(404).send({ message: 'nenhuma refeicao' })
+    }
+
+    return { snack }
+  })
+
+  app.get('/count/:id', async (request) => {
+    const getSnackParamsSchema = z.object({
+      id: z.string().uuid(),
+    })
+
+    const paramSnack = getSnackParamsSchema.parse(request.params)
+
+    const countSnack = await knex('snacks')
+      .where({
+        userId: paramSnack.id,
+      })
+      .count({ total: '*' })
+
+    return countSnack
+  })
+
+  app.get('/count/diet-true/:id', async (request) => {
+    const getSnackParamsSchema = z.object({
+      id: z.string().uuid(),
+    })
+
+    const paramSnack = getSnackParamsSchema.parse(request.params)
+
+    const countSnack = await knex('snacks')
+      .where({
+        userId: paramSnack.id,
+        diet: true,
+      })
+      .count({ total: '*' })
+
+    return countSnack
+  })
+
+  app.get('/count/diet-false/:id', async (request) => {
+    const getSnackParamsSchema = z.object({
+      id: z.string().uuid(),
+    })
+
+    const paramSnack = getSnackParamsSchema.parse(request.params)
+
+    const countSnack = await knex('snacks')
+      .where({
+        userId: paramSnack.id,
+        diet: false,
+      })
+      .count({ total: '*' })
+
+    return countSnack
+  })
 }
